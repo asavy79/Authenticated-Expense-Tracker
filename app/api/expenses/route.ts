@@ -1,5 +1,5 @@
 // pages/api/expenses.js
-import { addExpense, getExpenses, deleteExpense } from "@/actions/expenseActions";
+import { addExpense, getExpenses, deleteExpense, updateExpense } from "@/actions/expenseActions";
 import type { NextApiRequest} from 'next'
 import { NextResponse } from "next/server";
 
@@ -41,6 +41,16 @@ export async function GET() {
 
 }
 
+export async function PUT(request: NextApiRequest) {
+  const data = await request.json();
+  const result = await updateExpense(data);
+
+  if(result.error) {
+    return NextResponse.json({error: result.error}, {status: 500});
+  }
+
+  return NextResponse.json(result, {status: 200});
+}
 
 /*
 export default async (req: NextApiRequest, res: NextApiResponse) => {

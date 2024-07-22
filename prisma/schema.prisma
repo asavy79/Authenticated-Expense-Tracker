@@ -16,9 +16,6 @@ model User {
   image         String?
   password      String?
   accounts      Account[]
-  // Optional for WebAuthn support
-  // expenses      Expense[]
-  // auth          Auth?
   expenses      Expense[]
   Company       Company?  @relation(fields: [companyId], references: [id])
   companyId     Int?
@@ -47,29 +44,6 @@ model Company {
   createdAt DateTime  @default(now())
 }
 
-// model Expense {
-//   id String @id @default(cuid())
-
-//   userId String
-//   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   name  String
-//   type  String
-//   value Float
-//   date  DateTime
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
-
-// model Auth {
-//   id     String @id @default(cuid())
-//   userId String @unique
-//   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   passwordHash String
-// }
-
 model Account {
   userId            String
   type              String
@@ -89,4 +63,22 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
 }

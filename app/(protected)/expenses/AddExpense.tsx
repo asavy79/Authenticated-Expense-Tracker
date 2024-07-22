@@ -49,6 +49,18 @@ export const AddExpense: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
         className="bg-white p-4 rounded shadow-md mb-4 mt-5"
       >
         <h3>Add a Transaction</h3>
+        <select
+          value={transactionType}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+          required
+          onChange={(e) => {
+            setTransactionType(e.target.value);
+          }}
+        >
+          <option value="">Select Transaction Type</option>
+          <option value="Expense">Expense</option>
+          <option value="Revenue">Revenue</option>
+        </select>
         <input
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
           onChange={(e) => {
@@ -88,25 +100,26 @@ export const AddExpense: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
           required
         >
           <option value="">Select Category</option>
-          <option value="Food">Food</option>
-          <option value="Transportation">Transportation</option>
-          <option value="Utilities">Utilities</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Individual Meals">Individual Meals</option>
-          <option value="Business Meals">Business Meals</option>
-          <option value="Lodgin">Lodging</option>
-        </select>
-        <select
-          value={transactionType}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-          required
-          onChange={(e) => {
-            setTransactionType(e.target.value);
-          }}
-        >
-          <option value="">Select Transaction Type</option>
-          <option value="Expense">Expense</option>
-          <option value="Revenue">Revenue</option>
+          {transactionType === "Expense" && (
+            <>
+              <option value="Affiliate Payout">Affiliate Payout</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Paid Post">Paid Post</option>
+              <option value="Banking Fee">Banking Fee</option>
+              <option value="Pullout">Pullout</option>
+              <option value="Company Expenses">Company Expense</option>
+              <option value="Signup">Singup</option>
+              <option value="Miscellaneous">Miscellaneous</option>
+            </>
+          )}
+          {transactionType === "Revenue" && (
+            <>
+              <option value="Sports Book Payout">Sports Book Payout</option>
+              <option value="Alcohol Revenue">Alcohol Revenue</option>
+              <option value="Ticket Sales">Ticket Sales</option>
+              <option value="Miscellaneous">Miscellaneous</option>
+            </>
+          )}
         </select>
         <button
           className="mt-2 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"

@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { auth, signOut } from "@/auth";
 import { number, string } from "zod";
-import { ExpenseSubmitType } from "@/app/expenses/page";
+import { ExpenseSubmitType } from "@/app/(protected)/expenses/page";
 
 type User = {
         id: string,
@@ -83,6 +83,24 @@ export const getExpenses = async () => {
         console.log(error);
         return {error: "Expenses could not be fetched"}
     }
+}
 
-
+export const updateExpense = async (updatedExpense: ExpenseType) => {
+    try {
+        const data = await db.expense.update({
+            where: {
+                id: updatedExpense.id,
+            },
+            data: {
+                name: updatedExpense.name,
+                category: updatedExpense.category,
+                value: updatedExpense.value,
+                date: updatedExpense.date,
+            }
+        })
+        return {data};
+    } catch(error) {
+        console.log(error);
+        return {error: "Expense could not be updated"};
+    }
 }

@@ -1,13 +1,24 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import React, { useState } from "react";
+import { BeatLoader } from "react-spinners";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
   const session = useSession();
+  const router = useRouter();
 
   if (session.status === "loading")
-    return <div className="text-center mt-5">Loading...</div>;
+    return (
+      <div className="text-center mt-5">
+        <BeatLoader />
+      </div>
+    );
+
+  const onClick = () => {
+    signOut();
+  };
 
   return (
     <div className="min-h-screen bg-cover bg-center">
@@ -30,8 +41,27 @@ const ProfilePage = () => {
           <p className="text-gray-600">{session?.data?.user?.email}</p>
           <p className="text-gray-600"></p>
           <div className="mt-4">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+            <button
+              onClick={() => router.push("/settings")}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+            >
               Edit Profile
+            </button>
+          </div>
+          <div className="mt-4">
+            <button
+              onClick={onClick}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+            >
+              Sign Out
+            </button>
+          </div>
+          <div className="mt-4">
+            <button
+              onClick={() => router.push("/expenses")}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+            >
+              Expenses
             </button>
           </div>
         </div>

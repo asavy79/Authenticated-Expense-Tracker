@@ -22,7 +22,7 @@ ChartJS.register(
 
 export const BarChart = () => {
   const context = useContext(ExpenseContext);
-  const transactions = context ? context.expenses : [];
+  const transactions = context ? context.filteredExpenses : [];
 
   const monthlyData = transactions
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -108,7 +108,7 @@ export const BarChart = () => {
   };
 
   return (
-    <div className="relative w-full h-96">
+    <div className="relative w-full md:h-96">
       <Bar data={data} options={options} />
     </div>
   );

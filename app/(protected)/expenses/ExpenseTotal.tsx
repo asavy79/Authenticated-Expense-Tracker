@@ -5,7 +5,7 @@ import { ExpenseContext } from "./providers/ExpenseProvider";
 
 export const ExpenseTotal = () => {
   const context = useContext(ExpenseContext);
-  const expenses = context ? context.expenses : [];
+  const expenses = context ? context.filteredExpenses : [];
 
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [revenueTotal, setRevenueTotal] = useState(0);
@@ -79,7 +79,9 @@ export const ExpenseTotal = () => {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 mb-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Expense Breakdown</h1>
+      <h1 className="text-2xl font-bold text-center mb-4">
+        Transaction Breakdown
+      </h1>
       <div className="flex justify-between items-center">
         <div className="text-center">
           <h3 className="text-xl font-semibold text-gray-700">

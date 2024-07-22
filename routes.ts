@@ -3,7 +3,8 @@
  * @type {string[]}
  */
 export const publicRoutes = [
-    "/"
+    "/",
+    "/auth/new-verification",
 ]
 
 /**An array of routes used for authentication
@@ -14,6 +15,9 @@ export const authRoutes = [
     "/auth/login",
     "/auth/register",
     "/",
+    "/auth/error",
+    "/auth/reset",
+    "/auth/new-password",
 ]
 
 
