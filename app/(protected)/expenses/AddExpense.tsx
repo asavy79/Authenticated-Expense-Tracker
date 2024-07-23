@@ -7,15 +7,15 @@ import { ExpenseContext } from "./providers/ExpenseProvider";
 export const AddExpense: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
   const expenseContext = useContext(ExpenseContext);
 
-  if (!expenseContext) return null;
-
-  const { addExpense } = expenseContext;
-
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [transactionType, setTransactionType] = useState("");
+
+  if (!expenseContext) return null;
+
+  const { addExpense } = expenseContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
