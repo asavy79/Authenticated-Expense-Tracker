@@ -13,6 +13,7 @@ export const ExpenseListFull = () => {
 
   const expenseContext = useContext(ExpenseContext);
 
+  /*
   useEffect(() => {
     if (!expenseContext) {
       return setExpenses([]);
@@ -20,6 +21,8 @@ export const ExpenseListFull = () => {
       fetchExpenses();
     }
   }, []);
+
+  */
 
   if (!expenseContext) return null;
   const {

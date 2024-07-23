@@ -8,6 +8,7 @@ import Image from "next/image";
 export const ExpenseList = () => {
   const expenseContext = useContext(ExpenseContext);
 
+  /*
   useEffect(() => {
     if (!expenseContext) {
       setExpenses([]);
@@ -15,6 +16,8 @@ export const ExpenseList = () => {
       fetchExpenses();
     }
   }, [expenseContext]);
+
+  */
 
   if (!expenseContext) return null;
   const {

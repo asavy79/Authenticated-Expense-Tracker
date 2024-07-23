@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { FaUser, FaTachometerAlt, FaLock, FaList } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { ExpenseContextProvider } from "./providers/ExpenseProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { data, status } = useSession();
@@ -93,7 +94,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div>Null</div>
             )}
           </div>
-          {children}
+          <ExpenseContextProvider>{children}</ExpenseContextProvider>
         </div>
       </div>
     </div>

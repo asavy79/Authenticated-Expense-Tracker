@@ -2,6 +2,7 @@
 import { ExpenseType } from "@/actions/expenseActions";
 import { ExpenseSubmitType } from "../page";
 import React, { createContext, useState, useReducer, useEffect } from "react";
+import { getExpenses } from "@/actions/expenseActions";
 
 type FilterState = {
   category: string;
@@ -43,7 +44,21 @@ export const ExpenseContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  console.log("Mounted");
+
   const [expenses, setExpenses] = useState<ExpenseType[]>([]);
+
+  const [expensesFetched, setExpensesFetched] = useState(false);
+
+  /*
+  const fetchExpenses = async () => {
+    const fetchedExpenses = await getExpenses();
+    if (fetchedExpenses.data) {
+      setExpenses(fetchedExpenses.data);
+    }
+  };
+
+  */
 
   const fetchExpenses = async () => {
     try {
@@ -61,6 +76,7 @@ export const ExpenseContextProvider = ({
 
       const fetchedExpenses = result.data;
       setExpenses(fetchedExpenses);
+      setExpensesFetched(true);
     } catch (error) {
       console.log(error);
     }
@@ -90,6 +106,10 @@ export const ExpenseContextProvider = ({
       return { error: "Couldn't add expense" };
     }
   };
+
+  useEffect(() => {
+    if (!expensesFetched) fetchExpenses();
+  }, []);
 
   const deleteExpense = async (expenseId: number) => {
     const data = {

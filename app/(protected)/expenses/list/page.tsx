@@ -1,10 +1,8 @@
 "use client";
 import { ExpenseListFull } from "../ExpenseListFull";
-import { ExpenseContextProvider } from "../providers/ExpenseProvider";
 import { AddExpense } from "../AddExpense";
 import { ExpenseFilters } from "../ExpenseFilters";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Modal from "../Modal";
 
 const ExpenseListPage = () => {
@@ -15,7 +13,7 @@ const ExpenseListPage = () => {
   };
 
   return (
-    <ExpenseContextProvider>
+    <div>
       <div>
         <ExpenseFilters width="lg" />
         <div className="text-center">
@@ -38,7 +36,7 @@ const ExpenseListPage = () => {
           />
         </Modal>
       )}
-    </ExpenseContextProvider>
+    </div>
   );
 };
 

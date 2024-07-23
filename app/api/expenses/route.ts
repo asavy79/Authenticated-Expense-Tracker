@@ -1,6 +1,5 @@
 // pages/api/expenses.js
 import { addExpense, getExpenses, deleteExpense, updateExpense } from "@/actions/expenseActions";
-import type { NextApiRequest} from 'next'
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
