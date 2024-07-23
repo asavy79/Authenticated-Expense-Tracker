@@ -19,7 +19,6 @@ import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { login, LoginResponse } from "@/actions/login";
 import { useTransition } from "react";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { reset } from "@/actions/reset";
 
 type LoginError = LoginResponse extends { success: boolean; error: infer E }
@@ -29,7 +28,9 @@ type LoginError = LoginResponse extends { success: boolean; error: infer E }
 export const ResetForm = () => {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState<string | undefined>("");
-  const [errorMessage, setErrorMessage] = useState<LoginError | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
   const form = useForm<z.infer<typeof ResetSchema>>({
     resolver: zodResolver(ResetSchema),
     defaultValues: {
@@ -38,7 +39,7 @@ export const ResetForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof ResetSchema>) => {
-    setErrorMessage(null);
+    setErrorMessage(undefined);
     setSuccess("");
     console.log(values);
     startTransition(async () => {
