@@ -41,7 +41,7 @@ const SettingsPage = () => {
   });
 
   useEffect(() => {
-    if (user) {
+    if (user && user.name) {
       form.reset({ name: user.name, email: user.email });
     }
   }, [user, form]);

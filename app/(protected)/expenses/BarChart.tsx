@@ -7,6 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 import { useContext } from "react";
 import { ExpenseContext } from "./providers/ExpenseProvider";
@@ -26,22 +27,25 @@ export const BarChart = () => {
 
   const monthlyData = transactions
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .reduce((acc, transaction) => {
-      const month = new Date(transaction.date).toLocaleString("default", {
-        month: "short",
-        year: "numeric",
-      });
-      if (!acc[month]) {
-        acc[month] = { income: 0, expense: 0 };
-      }
-      if (transaction.type === "Revenue") {
-        acc[month].income += transaction.value;
-      } else if (transaction.type === "Expense") {
-        acc[month].expense += transaction.value;
-      }
+    .reduce<Record<string, { income: number; expense: number }>>(
+      (acc, transaction) => {
+        const month = new Date(transaction.date).toLocaleString("default", {
+          month: "short",
+          year: "numeric",
+        });
+        if (!acc[month]) {
+          acc[month] = { income: 0, expense: 0 };
+        }
+        if (transaction.type === "Revenue") {
+          acc[month].income += transaction.value;
+        } else if (transaction.type === "Expense") {
+          acc[month].expense += transaction.value;
+        }
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      {}
+    );
 
   const labels = Object.keys(monthlyData);
   const incomeData = labels.map((label) => monthlyData[label].income);
@@ -67,7 +71,7 @@ export const BarChart = () => {
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
       legend: {

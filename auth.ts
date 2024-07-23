@@ -42,8 +42,8 @@ export const {
             
             if(session?.user) {
               session.user.name = token.name;
-              session.user.email = token.email;
-              session.user.id = token.id;
+              session.user.email = token.email as string;
+              session.user.id = token.id as string;
             }
             return session
           },
@@ -56,10 +56,8 @@ export const {
 
             token.name = existingUser.name;
             token.email = existingUser.email;
+            token.id = existingUser.id;
 
-            if(user) {
-              token.id = user.id;
-            }
             return token
           }
     },

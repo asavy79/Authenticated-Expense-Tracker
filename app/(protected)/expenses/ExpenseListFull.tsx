@@ -9,7 +9,7 @@ export const ExpenseListFull = () => {
   const [editableExpenseId, setEditableExpenseId] = useState<number | null>(
     null
   );
-  const [editedExpense, setEditedExpense] = useState<ExpenseType | {}>({});
+  const [editedExpense, setEditedExpense] = useState<ExpenseType | null>(null);
 
   const expenseContext = useContext(ExpenseContext);
 
@@ -43,12 +43,14 @@ export const ExpenseListFull = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    if (name === "value") {
-      setEditedExpense({ ...editedExpense, [name]: parseFloat(value) });
-    } else if (name === "date") {
-      setEditedExpense({ ...editedExpense, [name]: new Date(value) });
-    } else {
-      setEditedExpense({ ...editedExpense, [name]: value });
+    if (editedExpense) {
+      if (name === "value") {
+        setEditedExpense({ ...editedExpense, [name]: parseFloat(value) });
+      } else if (name === "date") {
+        setEditedExpense({ ...editedExpense, [name]: new Date(value) });
+      } else {
+        setEditedExpense({ ...editedExpense, [name]: value });
+      }
     }
   };
 
@@ -68,11 +70,16 @@ export const ExpenseListFull = () => {
         console.log("Couldn't edit expense", result.error);
         return { error: "Couldn't edit expense" };
       }
-      const updatedExpenses = expenses.map((expense: ExpenseType) => {
-        return expense.id === editableExpenseId ? editedExpense : expense;
-      });
-      setExpenses(updatedExpenses);
-      setEditableExpenseId(null);
+
+      if (editedExpense) {
+        const updatedExpenses = expenses.map((expense: ExpenseType) => {
+          return expense.id === editableExpenseId ? editedExpense : expense;
+        });
+
+        setExpenses(updatedExpenses);
+        setEditableExpenseId(null);
+      }
+
       return result.data;
     } catch (error) {
       console.log(error);
@@ -84,8 +91,16 @@ export const ExpenseListFull = () => {
     setEditableExpenseId(null);
   };
 
+  const formatDate = (date: Date | string): string => {
+    const dateObj = typeof date === "string" ? new Date(date) : date;
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const renderExpenseRow = (expense: ExpenseType) => {
-    if (editableExpenseId === expense.id) {
+    if (editableExpenseId === expense.id && editedExpense) {
       return (
         <tr
           key={expense.id}
@@ -137,7 +152,7 @@ export const ExpenseListFull = () => {
             <input
               type="date"
               name="date"
-              value={editedExpense.date}
+              value={formatDate(editedExpense.date)}
               onChange={handleInputChange}
               className="border border-gray-300 rounded p-1"
             />

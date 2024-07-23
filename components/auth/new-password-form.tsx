@@ -34,7 +34,9 @@ export const NewPasswordForm = () => {
 
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState<string | undefined>("");
-  const [errorMessage, setErrorMessage] = useState<LoginError | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -43,13 +45,15 @@ export const NewPasswordForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-    setErrorMessage(null);
+    setErrorMessage(undefined);
     setSuccess("");
     console.log(values);
     startTransition(async () => {
       const response = await newPassword(values, token);
       setSuccess(response.success);
-      setErrorMessage(response.error);
+      if (response.error) {
+        setErrorMessage(response.error);
+      }
     });
   };
 

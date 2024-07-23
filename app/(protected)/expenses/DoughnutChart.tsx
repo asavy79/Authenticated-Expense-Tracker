@@ -1,5 +1,12 @@
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  TooltipItem,
+  ChartOptions,
+} from "chart.js";
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./providers/ExpenseProvider";
 import { ExpenseType } from "@/actions/expenseActions";
@@ -30,7 +37,9 @@ export const DoughnutChart: React.FC = () => {
   );
 
   const userTotals = expenses.reduce<Record<string, number>>((acc, expense) => {
-    acc[expense.user.name] = (acc[expense.user.name] || 0) + expense.value;
+    if (expense.user.name) {
+      acc[expense.user.name] = (acc[expense.user.name] || 0) + expense.value;
+    }
     return acc;
   }, {});
 
@@ -69,7 +78,7 @@ export const DoughnutChart: React.FC = () => {
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"doughnut"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -81,8 +90,8 @@ export const DoughnutChart: React.FC = () => {
       },
       tooltip: {
         callbacks: {
-          label: (tooltipItem) => {
-            const value = tooltipItem.raw;
+          label: (tooltipItem: TooltipItem<"doughnut">) => {
+            const value = tooltipItem.raw as number;
             const percentage = ((value / totalValue) * 100).toFixed(2);
             return `${tooltipItem.label}: ${percentage}%`;
           },

@@ -34,7 +34,9 @@ export const LoginForm = () => {
 
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState<string | undefined>("");
-  const [errorMessage, setErrorMessage] = useState<LoginError | null>(null);
+  const [errorMessage, setErrorMessage] = useState<LoginError | undefined>(
+    undefined
+  );
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -44,7 +46,7 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setErrorMessage(null);
+    setErrorMessage(undefined);
     setSuccess("");
     startTransition(async () => {
       const response = await login(values, callbackUrl);
