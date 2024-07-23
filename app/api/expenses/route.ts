@@ -2,9 +2,10 @@
 import { addExpense, getExpenses, deleteExpense, updateExpense } from "@/actions/expenseActions";
 import type { NextApiRequest} from 'next'
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: NextRequest) {
   const expense = await request.json();
   const result = await addExpense(expense);
 
@@ -16,7 +17,7 @@ export async function POST(request: NextApiRequest) {
 
 }
 
-export async function DELETE(request: NextApiRequest) {
+export async function DELETE(request: NextRequest) {
   const data = await request.json();
   const expenseId = data.expenseId;
 
@@ -41,7 +42,7 @@ export async function GET() {
 
 }
 
-export async function PUT(request: NextApiRequest) {
+export async function PUT(request: NextRequest) {
   const data = await request.json();
   const result = await updateExpense(data);
 
