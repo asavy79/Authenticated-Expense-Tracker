@@ -1,24 +1,33 @@
 "use client";
 
 import { ExpenseType } from "@/actions/expenseActions";
-import { useState, useEffect, useContext, useReducer } from "react";
+import { useEffect, useContext, useState } from "react";
 import { ExpenseContext } from "./providers/ExpenseProvider";
+import Image from "next/image";
 
 export const ExpenseList = () => {
   const expenseContext = useContext(ExpenseContext);
+
+  useEffect(() => {
+    if (!expenseContext) {
+      setExpenses([]);
+    } else if (expenses.length === 0) {
+      fetchExpenses();
+    }
+  }, [expenseContext]);
+
   if (!expenseContext) return null;
-  const { fetchExpenses, deleteExpense, filteredExpenses, expenses } =
-    expenseContext;
+  const {
+    fetchExpenses,
+    deleteExpense,
+    filteredExpenses,
+    setExpenses,
+    expenses,
+  } = expenseContext;
 
   const handleDelete = async (expenseId: number) => {
     await deleteExpense(expenseId);
   };
-
-  useEffect(() => {
-    if (expenses.length === 0) {
-      fetchExpenses();
-    }
-  }, []);
 
   return (
     <div className="flex space-x-6 p-6">
@@ -61,15 +70,18 @@ export const ExpenseList = () => {
                   className="bg-white border-b border-gray-200"
                 >
                   <td className="px-6 py-4 flex items-center">
-                    <img
+                    <Image
+                      width={40}
+                      height={40}
                       src={
                         expense.user.image !== null
                           ? `/${expense.user.image}`
                           : "/defaultProfile.png"
                       }
                       alt="User"
-                      className="h-8 w-8 rounded-full mr-2"
+                      className="rounded-full w-8 h-8 mr-2"
                     />
+
                     {expense.user.name}
                   </td>
                   <td

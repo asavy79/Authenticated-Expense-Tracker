@@ -4,6 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import React, { useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const ProfilePage = () => {
   const session = useSession();
@@ -25,10 +26,13 @@ const ProfilePage = () => {
       <div className="flex flex-col items-center justify-center h-full py-10">
         <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md text-center">
           <div className="mb-4">
-            <img
+            <Image
+              width={60}
+              height={60}
               src={
+                session.data?.user?.image !== undefined &&
                 session.data?.user?.image !== null
-                  ? session.data?.user?.image
+                  ? `/${session.data?.user?.image}`
                   : "defaultProfile.png"
               }
               alt="Profile Picture"

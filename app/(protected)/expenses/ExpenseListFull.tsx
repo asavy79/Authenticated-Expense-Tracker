@@ -3,9 +3,24 @@
 import { ExpenseType } from "@/actions/expenseActions";
 import React, { useState, useContext, useEffect } from "react";
 import { ExpenseContext } from "./providers/ExpenseProvider";
+import Image from "next/image";
 
 export const ExpenseListFull = () => {
+  const [editableExpenseId, setEditableExpenseId] = useState<number | null>(
+    null
+  );
+  const [editedExpense, setEditedExpense] = useState<ExpenseType | {}>({});
+
   const expenseContext = useContext(ExpenseContext);
+
+  useEffect(() => {
+    if (!expenseContext) {
+      return setExpenses([]);
+    } else if (expenses.length === 0) {
+      fetchExpenses();
+    }
+  }, []);
+
   if (!expenseContext) return null;
   const {
     fetchExpenses,
@@ -14,12 +29,6 @@ export const ExpenseListFull = () => {
     deleteExpense,
     filteredExpenses,
   } = expenseContext;
-
-  const [editableExpenseId, setEditableExpenseId] = useState<number | null>(
-    null
-  );
-
-  const [editedExpense, setEditedExpense] = useState<ExpenseType | {}>({});
 
   const handleDoubleClick = (expense: ExpenseType) => {
     if (expense.id === editableExpenseId) {
@@ -84,7 +93,9 @@ export const ExpenseListFull = () => {
           onDoubleClick={() => handleDoubleClick(expense)}
         >
           <td className="px-6 py-4 flex items-center">
-            <img
+            <Image
+              width={50}
+              height={50}
               src={
                 expense.user.image !== null
                   ? `/${expense.user.image}`
@@ -156,7 +167,9 @@ export const ExpenseListFull = () => {
         className="bg-white border-b border-gray-200"
       >
         <td className="px-6 py-4 flex items-center">
-          <img
+          <Image
+            width={50}
+            height={50}
             src={
               expense.user.image !== null
                 ? `/${expense.user.image}`
@@ -197,12 +210,6 @@ export const ExpenseListFull = () => {
       </tr>
     );
   };
-
-  useEffect(() => {
-    if (expenses.length === 0) {
-      fetchExpenses();
-    }
-  }, []);
 
   const handleDelete = async (expenseId: number) => {
     await deleteExpense(expenseId);

@@ -3,6 +3,7 @@ import { useSession, signOut } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import { FaUser, FaTachometerAlt, FaLock, FaList } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { data, status } = useSession();
@@ -22,7 +23,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <div className="lg:fixed w-full lg:w-1/5 bg-gray-800 h-full text-white flex flex-col items-center p-4 space-y-4 lg:space-y-10">
-        <img
+        <Image
+          width={150}
+          height={150}
           className="min-w-min mb-6"
           src="/astraLogo.webp"
           alt="Astra Logo"
@@ -77,7 +80,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   router.push("/profile");
                 }}
               >
-                <img
+                <Image
+                  width={40}
+                  height={40}
                   src={user?.image ? `/${user.image}` : "baseProfile.webp"}
                   alt="Profile Picture"
                   className="h-10 w-10 rounded-full mr-3"
