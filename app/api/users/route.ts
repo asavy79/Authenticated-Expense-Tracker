@@ -1,10 +1,11 @@
-import { NextApiRequest } from "next";
+
 import { updateUserInformation } from "@/actions/updateProfile";
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 
 
-export async function UPDATE(request: NextApiRequest) {
+export async function PUT(request: NextRequest) {
     const data = await request.json();
     const result = await updateUserInformation(data);
 

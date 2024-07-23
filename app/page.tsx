@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { LoginButton } from "@/components/auth/login-button";
+import Image from "next/image";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -18,7 +19,14 @@ export default function Home() {
             font.className
           )}
         >
-          <img src="astraLogo.webp" alt="Astra logo" />
+          <div className="flex flex-col items-center">
+            <Image
+              width={300}
+              height={300}
+              src="/astraLogo.webp"
+              alt="Astra logo"
+            />
+          </div>
         </h1>
         <p className="text-white text-lg">Expense tracking made easy</p>
         <div>
