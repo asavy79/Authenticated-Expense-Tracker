@@ -1,6 +1,5 @@
 import { db } from "@/lib/db";
-import { auth, signOut } from "@/auth";
-import { number, string } from "zod";
+import { auth } from "@/auth";
 import { ExpenseSubmitType } from "@/app/(protected)/expenses/page";
 
 type User = {

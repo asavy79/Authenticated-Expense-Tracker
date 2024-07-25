@@ -1,6 +1,5 @@
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
-import { getUserByEmail } from "@/data/user";
 
 export type UpdateInformationType = {
     field: "name" | "email" | "picture" | "organization";

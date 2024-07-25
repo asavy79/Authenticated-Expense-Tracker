@@ -2,7 +2,6 @@
 import { ExpenseType } from "@/actions/expenseActions";
 import { ExpenseSubmitType } from "../page";
 import React, { createContext, useState, useReducer, useEffect } from "react";
-import { getExpenses } from "@/actions/expenseActions";
 
 type FilterState = {
   category: string;

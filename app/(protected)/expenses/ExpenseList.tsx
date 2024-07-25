@@ -1,7 +1,7 @@
 "use client";
 
 import { ExpenseType } from "@/actions/expenseActions";
-import { useEffect, useContext, useState } from "react";
+import { useContext } from "react";
 import { ExpenseContext } from "./providers/ExpenseProvider";
 import Image from "next/image";
 

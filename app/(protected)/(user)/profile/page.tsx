@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import React, { useState } from "react";
+import React from "react";
 import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 import Image from "next/image";

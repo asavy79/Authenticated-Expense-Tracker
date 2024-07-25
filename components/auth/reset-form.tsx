@@ -17,7 +17,7 @@ import * as z from "zod";
 import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
-import { login, LoginResponse } from "@/actions/login";
+import { LoginResponse } from "@/actions/login";
 import { useTransition } from "react";
 import { reset } from "@/actions/reset";
 
