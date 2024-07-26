@@ -67,6 +67,7 @@ export const deleteAnExpense = async (expenseId: number) => {
 export const getExpenses = async () => {
     const session = await auth();
 
+
     if(!session?.user) return {error: "User not authenticated"};
 
     const company = await db.user.findUnique({where: {id: session.user.id}, select: {Company: true}});

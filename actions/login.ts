@@ -12,7 +12,6 @@ import { sendVerificationEmail } from "@/lib/mail";
 export type LoginResponse = { success: false, error: "Invalid credentials!" | "Something went wrong!" | "Invalid fields!" | "Email does not exist!" | "Email not verified! Verification email sent."};
 
 export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string | null): Promise<LoginResponse> => {
-    console.log(values);
     const validatedFields = LoginSchema.safeParse(values);
 
     if(!validatedFields.success) {
