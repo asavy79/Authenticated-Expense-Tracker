@@ -20,13 +20,7 @@ export const ExpenseList = () => {
   */
 
   if (!expenseContext) return null;
-  const {
-    fetchExpenses,
-    deleteExpense,
-    filteredExpenses,
-    setExpenses,
-    expenses,
-  } = expenseContext;
+  const { deleteExpense, filteredExpenses } = expenseContext;
 
   const handleDelete = async (expenseId: number) => {
     await deleteExpense(expenseId);

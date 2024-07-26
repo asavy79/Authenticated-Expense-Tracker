@@ -15,7 +15,7 @@ export const AddExpense: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
 
   if (!expenseContext) return null;
 
-  const { addExpense } = expenseContext;
+  const { addAnExpense } = expenseContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export const AddExpense: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
       name: name,
     };
     console.log(newExpense);
-    const result = await addExpense(newExpense);
+    const result = await addAnExpense(newExpense);
 
     if (result.error) {
       return;

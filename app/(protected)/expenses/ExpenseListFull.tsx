@@ -4,6 +4,7 @@ import { ExpenseType } from "@/actions/expenseActions";
 import React, { useState, useContext } from "react";
 import { ExpenseContext } from "./providers/ExpenseProvider";
 import Image from "next/image";
+import { updateExpense } from "@/actions/expenseActions";
 
 export const ExpenseListFull = () => {
   const [editableExpenseId, setEditableExpenseId] = useState<number | null>(
@@ -25,13 +26,8 @@ export const ExpenseListFull = () => {
   */
 
   if (!expenseContext) return null;
-  const {
-    fetchExpenses,
-    setExpenses,
-    expenses,
-    deleteExpense,
-    filteredExpenses,
-  } = expenseContext;
+  const { setExpenses, expenses, deleteExpense, filteredExpenses } =
+    expenseContext;
 
   const handleDoubleClick = (expense: ExpenseType) => {
     if (expense.id === editableExpenseId) {
@@ -58,20 +54,11 @@ export const ExpenseListFull = () => {
   };
 
   const saveChanges = async () => {
-    console.log(editedExpense);
-    try {
-      const response = await fetch("/api/expenses", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editedExpense),
-      });
-
-      const result = await response.json();
+    if (editedExpense) {
+      const result = await updateExpense(editedExpense);
       if (result.error) {
-        console.log("Couldn't edit expense", result.error);
-        return { error: "Couldn't edit expense" };
+        console.log(result.error);
+        return;
       }
 
       if (editedExpense) {
@@ -81,12 +68,8 @@ export const ExpenseListFull = () => {
 
         setExpenses(updatedExpenses);
         setEditableExpenseId(null);
+        return;
       }
-
-      return result.data;
-    } catch (error) {
-      console.log(error);
-      return { error: "Couldn't edit expense" };
     }
   };
 

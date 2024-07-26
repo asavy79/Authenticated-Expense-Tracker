@@ -1,3 +1,4 @@
+"use server";
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import { ExpenseSubmitType } from "@/app/(protected)/expenses/page";
@@ -53,7 +54,7 @@ export const addExpense = async (expense: ExpenseSubmitType) => {
     } 
 }
 
-export const deleteExpense = async (expenseId: number) => {
+export const deleteAnExpense = async (expenseId: number) => {
     try {
         const data = await db.expense.delete({where: {id: expenseId}});
         return {data}

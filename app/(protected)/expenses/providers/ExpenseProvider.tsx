@@ -2,6 +2,11 @@
 import { ExpenseType } from "@/actions/expenseActions";
 import { ExpenseSubmitType } from "../page";
 import React, { createContext, useState, useReducer, useEffect } from "react";
+import {
+  getExpenses,
+  addExpense,
+  deleteAnExpense,
+} from "@/actions/expenseActions";
 
 type FilterState = {
   category: string;
@@ -26,9 +31,9 @@ type FilterAction =
 type ExpenseContextType = {
   expenses: ExpenseType[];
   fetchExpenses: () => Promise<void>;
-  addExpense: (
+  addAnExpense: (
     expense: ExpenseSubmitType
-  ) => Promise<{ success: string; error: null } | { error: string }>;
+  ) => Promise<{ error: string } | { error: null }>;
   deleteExpense: (expenseId: number) => Promise<void>;
   setExpenses: (expenses: ExpenseType[]) => void;
   filteredExpenses: ExpenseType[];
@@ -49,16 +54,15 @@ export const ExpenseContextProvider = ({
 
   const [expensesFetched, setExpensesFetched] = useState(false);
 
-  /*
   const fetchExpenses = async () => {
     const fetchedExpenses = await getExpenses();
     if (fetchedExpenses.data) {
       setExpenses(fetchedExpenses.data);
+      setExpensesFetched(true);
     }
   };
 
-  */
-
+  /*
   const fetchExpenses = async () => {
     try {
       const response = await fetch("/api/expenses", {
@@ -80,7 +84,18 @@ export const ExpenseContextProvider = ({
       console.log(error);
     }
   };
+  */
 
+  const addAnExpense = async (expense: ExpenseSubmitType) => {
+    const result = await addExpense(expense);
+
+    if (result.error) {
+      return { error: result.error };
+    }
+    await fetchExpenses();
+    return { error: null };
+  };
+  /*
   const addExpense = async (expense: ExpenseSubmitType) => {
     try {
       const response = await fetch("/api/expenses", {
@@ -105,11 +120,25 @@ export const ExpenseContextProvider = ({
       return { error: "Couldn't add expense" };
     }
   };
+  */
 
   useEffect(() => {
     if (!expensesFetched) fetchExpenses();
   }, []);
 
+  const deleteExpense = async (expenseId: number) => {
+    const result = await deleteAnExpense(expenseId);
+
+    if (result.error) {
+      console.log("Couldn'd delete expense", result.error);
+    } else {
+      setExpenses((prevExpenses) =>
+        prevExpenses.filter((expense) => expense.id !== expenseId)
+      );
+    }
+  };
+
+  /*
   const deleteExpense = async (expenseId: number) => {
     const data = {
       expenseId: expenseId,
@@ -136,6 +165,8 @@ export const ExpenseContextProvider = ({
       console.log(error);
     }
   };
+
+  */
 
   const initialState: FilterState = {
     category: "",
@@ -192,7 +223,7 @@ export const ExpenseContextProvider = ({
     <ExpenseContext.Provider
       value={{
         expenses,
-        addExpense,
+        addAnExpense,
         fetchExpenses,
         deleteExpense,
         setExpenses,
