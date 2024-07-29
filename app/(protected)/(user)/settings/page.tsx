@@ -110,7 +110,7 @@ const SettingsPage = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Old Password</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
