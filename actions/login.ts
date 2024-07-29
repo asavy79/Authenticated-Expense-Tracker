@@ -27,11 +27,13 @@ export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: s
     }
 
 
+    /*
     if(!existingUser.emailVerified) {
         const verificationToken = await generateVerificationToken(existingUser.email);
         await sendVerificationEmail(verificationToken.email, verificationToken.token);
         return {success: false, error: "Email not verified! Verification email sent."}
     }
+    */
 
 
     try {

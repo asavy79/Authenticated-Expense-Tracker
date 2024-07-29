@@ -29,8 +29,10 @@ export const {
 
           if(!user || !user.id) return false;
 
+          /*
           const existingUser = await getUserById(user.id);
           if(!existingUser?.emailVerified) return false;
+          */
 
           return true;
           },
@@ -59,7 +61,7 @@ export const {
 
             return token
           }
-    },
+  },
     adapter: PrismaAdapter(db),
     session: {strategy: "jwt"},
     ...authConfig});

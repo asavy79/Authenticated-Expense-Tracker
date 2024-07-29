@@ -4,14 +4,12 @@ import { DoughnutChart } from "./DoughnutChart";
 import { BarChart } from "./BarChart";
 import { ExpenseTotal } from "./ExpenseTotal";
 import { ExpenseFilters } from "./ExpenseFilters";
+import { Expense } from "@prisma/client";
 
-export type ExpenseSubmitType = {
-  name: string;
-  category: string;
-  date: Date;
-  value: number;
-  type: string;
-};
+export type ExpenseSubmitType = Omit<
+  Expense,
+  "id" | "createdAt" | "updatedAt" | "userId" | "companyId"
+>;
 
 const ExpensePage = () => {
   return (

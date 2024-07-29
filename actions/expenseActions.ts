@@ -2,16 +2,17 @@
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import { ExpenseSubmitType } from "@/app/(protected)/expenses/page";
+import { User } from "@prisma/client";
 
-type User = {
-        id: string,
-        name: string | null,
-        email: string,
-        emailVerified: Date | null,
-        image: string | null,
-        password: string | null,
-        companyId: number | null,
-}
+
+ 
+
+// type test = Prisma.UserGetPayload<{
+//     include: {
+//         Company: true
+//     }
+// }>
+
 
 
 export type ExpenseType = {

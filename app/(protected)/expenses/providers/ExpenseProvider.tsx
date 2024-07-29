@@ -62,65 +62,19 @@ export const ExpenseContextProvider = ({
     }
   };
 
-  /*
-  const fetchExpenses = async () => {
-    try {
-      const response = await fetch("/api/expenses", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const result = await response.json();
-      if (result.error) {
-        return console.log("Couldn't fetch expenses: ", result.error);
-      }
-
-      const fetchedExpenses = result.data;
-      setExpenses(fetchedExpenses);
-      setExpensesFetched(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  */
-
   const addAnExpense = async (expense: ExpenseSubmitType) => {
     const result = await addExpense(expense);
 
     if (result.error) {
       return { error: result.error };
     }
-    await fetchExpenses();
+
+    if (result.data) {
+      fetchExpenses();
+    }
+
     return { error: null };
   };
-  /*
-  const addExpense = async (expense: ExpenseSubmitType) => {
-    try {
-      const response = await fetch("/api/expenses", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(expense),
-      });
-
-      const result = await response.json();
-
-      if (result.error) {
-        console.log("Couldn't add expense", result.error);
-        return { error: "Couldn't add expense" };
-      } else {
-        await fetchExpenses();
-        return { success: "Expense added", error: null };
-      }
-    } catch (error) {
-      console.log(error);
-      return { error: "Couldn't add expense" };
-    }
-  };
-  */
 
   useEffect(() => {
     if (!expensesFetched) fetchExpenses();
@@ -137,36 +91,6 @@ export const ExpenseContextProvider = ({
       );
     }
   };
-
-  /*
-  const deleteExpense = async (expenseId: number) => {
-    const data = {
-      expenseId: expenseId,
-    };
-    try {
-      const response = await fetch("/api/expenses", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (result.error) {
-        console.log("Couldn't delete expense", result.error);
-      } else {
-        setExpenses((prevExpenses) =>
-          prevExpenses.filter((expense) => expense.id != expenseId)
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  */
 
   const initialState: FilterState = {
     category: "",

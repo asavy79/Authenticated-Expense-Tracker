@@ -1,5 +1,6 @@
 "use client";
 
+import { addExpense } from "@/actions/expenseActions";
 import { useState, useContext } from "react";
 import { ExpenseSubmitType } from "./page";
 import { ExpenseContext } from "./providers/ExpenseProvider";
@@ -28,6 +29,8 @@ export const AddExpense: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
     };
     console.log(newExpense);
     const result = await addAnExpense(newExpense);
+
+    // const result = await addExpense()
 
     if (result.error) {
       return;
