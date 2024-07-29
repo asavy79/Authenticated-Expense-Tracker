@@ -5,6 +5,7 @@ import React, { useState, useContext } from "react";
 import { ExpenseContext } from "./providers/ExpenseProvider";
 import Image from "next/image";
 import { updateExpense } from "@/actions/expenseActions";
+import { DownloadCSV } from "./DownloadCSV";
 
 export const ExpenseListFull = () => {
   const [editableExpenseId, setEditableExpenseId] = useState<number | null>(
@@ -255,6 +256,9 @@ export const ExpenseListFull = () => {
               .map(renderExpenseRow)}
           </tbody>
         </table>
+      </div>
+      <div className="flex flex-col mt-10 mb-10">
+        <DownloadCSV />
       </div>
     </div>
   );

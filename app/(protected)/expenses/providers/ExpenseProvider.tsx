@@ -129,17 +129,16 @@ export const ExpenseContextProvider = ({
 
   const filteredExpenses = expenses.filter((expense) => {
     return (
-      ((state.category === "" || expense.category === state.category) &&
-        (state.type === "" || expense.type === state.type) &&
-        state.userId === "") ||
-      (expense.userId === state.userId &&
-        (state.type === "" || expense.type === state.type) &&
-        expense.value >= state.minCost &&
-        expense.value <= state.maxCost &&
-        (state.startDate === "" ||
-          new Date(expense.date) >= new Date(state.startDate)) &&
-        (state.endDate === "" ||
-          new Date(expense.date) <= new Date(state.endDate)))
+      (state.category === "" || expense.category === state.category) &&
+      (state.type === "" || expense.type === state.type) &&
+      (state.userId === "" || expense.userId === state.userId) &&
+      (state.type === "" || expense.type === state.type) &&
+      expense.value >= state.minCost &&
+      expense.value <= state.maxCost &&
+      (state.startDate === "" ||
+        new Date(expense.date) >= new Date(state.startDate)) &&
+      (state.endDate === "" ||
+        new Date(expense.date) <= new Date(state.endDate))
     );
   });
 
