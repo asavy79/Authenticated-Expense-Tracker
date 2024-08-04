@@ -88,7 +88,10 @@ export const ExpenseList = () => {
                         : "text-green-500"
                     }`}
                   >
-                    {expense.type === "Expense" ? "-" : ""}${expense.value}
+                    {expense.type === "Expense" ? "-" : ""}$
+                    {expense.value
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </td>
                   <td className="px-6 py-4">{expense.name}</td>
                   <td className="px-6 py-4">{expense.category}</td>

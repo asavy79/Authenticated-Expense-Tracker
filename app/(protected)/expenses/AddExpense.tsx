@@ -27,7 +27,6 @@ export const AddExpense: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
       type: transactionType,
       name: name,
     };
-    console.log(newExpense);
     const result = await addAnExpense(newExpense);
 
     // const result = await addExpense()

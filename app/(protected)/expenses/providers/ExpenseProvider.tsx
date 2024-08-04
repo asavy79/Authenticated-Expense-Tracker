@@ -48,8 +48,6 @@ export const ExpenseContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  console.log("Mounted");
-
   const [expenses, setExpenses] = useState<ExpenseType[]>([]);
 
   const [expensesFetched, setExpensesFetched] = useState(false);

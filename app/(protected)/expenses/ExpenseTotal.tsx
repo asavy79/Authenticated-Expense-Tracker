@@ -88,13 +88,21 @@ export const ExpenseTotal = () => {
             Total Expenses
           </h3>
           <p className="text-3xl text-red-500 font-bold">
-            ${displayExpenseTotal.toFixed(2)}
+            $
+            {displayExpenseTotal
+              .toFixed(2)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </p>
         </div>
         <div className="text-center">
           <h3 className="text-xl font-semibold text-gray-700">Total Revenue</h3>
           <p className="text-3xl text-green-500 font-bold">
-            ${displayRevenueTotal.toFixed(2)}
+            $
+            {displayRevenueTotal
+              .toFixed(2)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </p>
         </div>
       </div>
